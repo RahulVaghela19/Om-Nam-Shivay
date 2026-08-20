@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>🕉️ Om Namah Shivay Jaap Counter</title>
+<link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#050719">
+</head>
+<body>
+<div class="bg"></div>
+<div class="veil"></div>
+
+<header class="top">
+  <div class="logo">
+    <div class="om">ॐ</div>
+    <div><h1>Om Namah Shivay</h1><b>Jaap Counter</b></div>
+  </div>
+  <div class="top-cards">
+    <div class="top-card">
+      <span>કુલ જાપ</span><strong id="total">0</strong><em>✦</em>
+      <div class="tiny-line"><i id="totalLine"></i></div>
+    </div>
+    <div class="top-card">
+      <span>પ્રગતિ</span><strong id="progress">0.00000000000%</strong>
+      <div class="tiny-line"><i id="progressLine"></i></div>
+    </div>
+    <button id="soundCard" class="top-card sound">
+      <span>મંત્ર ધ્વનિ</span><strong>🔊 <b id="soundText">ON</b></strong><em>∞ Loop</em>
+    </button>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <nav class="main-nav">
+      <button data-page="live" class="nav live"><span>▶</span><b>Live Jaap</b></button>
+      <button data-page="add" class="nav add"><span>＋</span><b>Add Jaap</b></button>
+      <button data-page="calendar" class="nav calendar"><span>▣</span><b>Calendar</b></button>
+      <button data-page="graph" class="nav graph"><span>⌁</span><b>Graph</b></button>
+      <button data-page="stats" class="nav stats"><span>📊</span><b>Statistics</b></button>
+      <button data-page="achievements" class="nav achievements"><span>🏆</span><b>Achievements</b></button>
+      <button data-page="reports" class="nav reports"><span>📋</span><b>Reports</b></button>
+      <button data-page="yoga" class="nav yoga"><span>🧘</span><b>Yoga & Pranayama</b></button>
+      <button data-page="settings" class="nav settings"><span>⚙</span><b>Settings</b></button>
+    </nav>
+    <section class="side-card">
+      <h3>🎯 Smart Target</h3>
+      <p>મુખ્ય લક્ષ્ય <b id="sideTarget">1,100,000,000</b></p>
+      <p>કુલ પૂર્ણ જાપ <b id="sideDone">0</b></p>
+      <p>બાકી લક્ષ્ય <b class="red" id="sideRemain">1,100,000,000</b></p>
+      <p>પ્રગતિ <b class="yellow" id="sideProgress">0.00000000000%</b></p>
+      <p>અંદાજિત પૂર્ણતા <b id="sideEta">—</b></p>
+      <div class="bar"><i id="sideBar"></i></div>
+    </section>
+    <section class="side-card backup">
+      <h3>☁ Backup</h3>
+      <button id="download">↓ Backup Download</button>
+      <label for="restore">↑ Backup Restore</label>
+      <input id="restore" type="file" accept=".json">
+    </section>
+    <section class="side-card mini-stats">
+      <h3>📊 Quick Stats</h3>
+      <p>🔥 Current Streak <b id="quickStreak">0</b></p>
+      <p>🏆 Best Day <b id="quickBest">0</b></p>
+      <p>📅 Active Days <b id="quickActive">0</b></p>
+      <p>📊 Daily Avg <b id="quickAvg">0</b></p>
+    </section>
+  </aside>
+
+  <main class="content">
+    <section id="live" class="page">
+      <div class="panel-title"><h2>🔴 Live Jaap</h2></div>
+      <div class="live-box">
+        <div class="session-tag">CURRENT SESSION</div>
+        <div id="session" class="big-number">0</div>
+        <button id="jaap" class="round-jaap" disabled>ॐ<br><small>જાપ</small></button>
+        <div id="timer">00:00:00</div>
+        <div class="quick-adds">
+          <button data-add="1" disabled>+1</button>
+          <button data-add="10" disabled>+10</button>
+          <button data-add="108" disabled>+108</button>
+        </div>
+        <div class="controls">
+          <button id="start" class="gold">▶ Start</button>
+          <button id="pause">Ⅱ Pause</button>
+          <button id="end" class="danger" disabled>■ End</button>
+          <button id="undoSession">↶ Undo</button>
+        </div>
+        <p id="liveMsg">Start દબાવીને જાપ શરૂ કરો.</p>
+      </div>
+    </section>
+
+    <section id="add" class="page">
+      <div class="panel-title"><h2>➕ Add Jaap</h2></div>
+      <div class="form-panel">
+        <label>તારીખ<input id="addDate" type="date"></label>
+        <label>જાપની સંખ્યા<input id="addCount" type="number" min="0" step="1" placeholder="જેમ કે 108"></label>
+        <button id="save" class="gold wide">💾 Save Jaap</button>
+        <p id="addMsg"></p>
+      </div>
+      <div class="records panel">
+        <h3>Recent Records</h3><div id="records"></div>
+      </div>
+    </section>
+
+    <section id="calendar" class="page active">
+      <div class="calendar-panel panel">
+        <div class="calendar-head">
+          <button id="prev">‹</button><h2>Calendar - <span id="month"></span></h2><button id="next">›</button>
+          <button id="todayBtn">આજ</button>
+        </div>
+        <div class="week"><span>રવિ</span><span>સોમ</span><span>મંગળ</span><span>બુધ</span><span>ગુરુ</span><span>શુક્ર</span><span>શનિ</span></div>
+        <div id="days" class="days"></div>
+        <div id="legend" class="legend"></div>
+      </div>
+      <div id="dayDetail" class="day-detail panel hidden"></div>
+      <div class="graphs-inline">
+        <div class="graph-panel panel"><h3>Daily Jaap <small>(Last 31 Days)</small></h3><canvas id="daily"></canvas></div>
+        <div class="graph-panel panel"><h3>Monthly Jaap <small>(2026)</small></h3><canvas id="monthly"></canvas></div>
+      </div>
+    </section>
+
+    <section id="stats" class="page">
+      <div class="panel-title"><h2>📊 Statistics Dashboard</h2></div>
+      <div class="stat-grid">
+        <div class="stat-card"><span>🕉️ Total Jaap</span><b id="statTotal">0</b></div>
+        <div class="stat-card"><span>🔥 Current Streak</span><b id="statStreak">0 Days</b></div>
+        <div class="stat-card"><span>🏆 Longest Streak</span><b id="statLongest">0 Days</b></div>
+        <div class="stat-card"><span>⭐ Best Day</span><b id="statBest">0</b></div>
+        <div class="stat-card"><span>📅 Active Days</span><b id="statActive">0</b></div>
+        <div class="stat-card"><span>📊 Daily Average</span><b id="statAverage">0</b></div>
+        <div class="stat-card"><span>🎯 Remaining</span><b id="statRemain">1,100,000,000</b></div>
+        <div class="stat-card"><span>⏳ Target ETA</span><b id="statEta">—</b></div>
+      </div>
+      <div class="milestone panel">
+        <h3>🎯 Next Milestone</h3>
+        <div id="milestoneText">1,000 Jaap</div>
+        <div class="milestone-bar"><i id="milestoneBar"></i></div>
+      </div>
+    </section>
+
+    <section id="achievements" class="page">
+      <div class="panel-title"><h2>🏆 Achievements & Milestones</h2></div>
+      <div id="achievementGrid" class="achievement-grid"></div>
+    </section>
+
+    <section id="reports" class="page">
+      <div class="panel-title"><h2>📋 Daily & Monthly Reports</h2></div>
+      <div class="report-switch">
+        <button id="dailyReportTab" class="report-tab active">📊 Daily Report</button>
+        <button id="monthlyReportTab" class="report-tab">📆 Monthly Report</button>
+      </div>
+      <div id="dailyReport" class="report-box"></div>
+      <div id="monthlyReport" class="report-box hidden"></div>
+    </section>
+
+    <section id="yoga" class="page">
+      <div class="panel-title"><h2>🧘 Yoga, Pranayama & Adhyatmik Gyan</h2></div>
+      <div class="yoga-toolbar panel">
+        <label>વિષય / Topic
+          <select id="yogaTopic">
+            <option value="overview">🧘 યોગ પરિચય</option>
+            <option value="pranayama">🌬️ પ્રાણાયામ</option>
+            <option value="chakras">🌈 માનવ શરીરના 7 ચક્ર</option>
+            <option value="siddhis">✨ અષ્ટ સિદ્ધિઓ</option>
+          </select>
+        </label>
+        <label>🔤 અક્ષર કદ
+          <input id="yogaFont" type="range" min="16" max="28" value="19">
+        </label>
+        <button id="yogaBookmark">🔖 Bookmark</button>
+      </div>
+      <article id="yogaContent" class="yoga-content panel"></article>
+      <div class="yoga-note panel">
+        <h3>⚠️ સુરક્ષિત અભ્યાસ માટે નોંધ</h3>
+        <p>યોગ અને પ્રાણાયામનો અભ્યાસ ધીમે, આરામથી અને પોતાની ક્ષમતા મુજબ કરવો. શ્વાસ રોકવો, ખૂબ જ ઝડપી શ્વાસ લેવો અથવા અતિશય અભ્યાસ કરવો યોગ્ય નથી. ચક્કર, દુખાવો, શ્વાસ લેવામાં તકલીફ કે અસ્વસ્થતા થાય તો તરત રોકાઈ જવું. આ section શૈક્ષણિક માહિતી માટે છે; વ્યક્તિગત તબીબી સલાહનો વિકલ્પ નથી.</p>
+      </div>
+    </section>
+
+    <section id="settings" class="page">
+      <div class="panel-title"><h2>⚙ Settings</h2></div>
+      <div class="settings-grid">
+        <div class="settings-card theme-gallery-card">
+          <h3>🎨 Mahadev Theme Gallery</h3>
+          <div id="themeGallery" class="theme-gallery">
+            <button class="theme-tile active" data-theme-choice="mahadev"><span>ॐ</span><b>Mahadev</b><small>Dark</small></button>
+            <button class="theme-tile" data-theme-choice="blue"><span>🔱</span><b>Kailash</b><small>Deep Blue</small></button>
+            <button class="theme-tile" data-theme-choice="purple"><span>🕉️</span><b>Shiv</b><small>Purple</small></button>
+            <button class="theme-tile" data-theme-choice="saffron"><span>🔥</span><b>Rudra</b><small>Saffron</small></button>
+            <button class="theme-tile" data-theme-choice="midnight"><span>🌙</span><b>Neelkanth</b><small>Midnight</small></button>
+            <button class="theme-tile" data-theme-choice="forest"><span>🌿</span><b>Van Shiv</b><small>Forest</small></button>
+          </div>
+          <select id="themeSelect" class="theme-fallback-select" aria-label="Theme">
+            <option value="mahadev">Mahadev Dark</option><option value="blue">Deep Blue</option><option value="purple">Purple Shiv</option><option value="saffron">Saffron Dark</option><option value="midnight">Neelkanth Midnight</option><option value="forest">Van Shiv Forest</option>
+          </select>
+        </div>
+        <div class="settings-card notifications-card">
+          <h3>🔔 Custom Notifications</h3>
+          <label class="check"><input id="notify108" type="checkbox" checked> દરેક 108 જાપે</label>
+          <label class="check"><input id="notify1000" type="checkbox" checked> દરેક 1,000 જાપે</label>
+          <label class="check"><input id="notifyDaily" type="checkbox" checked> Daily Target પૂર્ણ થાય ત્યારે</label>
+          <label class="check"><input id="notifyMilestone" type="checkbox" checked> Milestone પૂર્ણ થાય ત્યારે</label>
+          <button id="enableNotifications">🔔 Enable Browser Notifications</button>
+          <p id="notificationStatus">Notifications: OFF</p>
+        </div>
+        <div class="settings-card">
+          <h3>🔊 Mantra Audio</h3>
+          <label>Volume <input id="volume" type="range" min="0" max="1" step=".05" value=".55"></label>
+          <label>Speed <select id="speed"><option value=".75">0.75×</option><option value="1" selected>1×</option><option value="1.25">1.25×</option><option value="1.5">1.5×</option></select></label>
+          <label class="check"><input id="autoAudio" type="checkbox" checked> Start audio with Live Jaap</label>
+        </div>
+        <div class="settings-card smart-target-card">
+          <h3>🎯 Smart Target</h3>
+          <label>Main Target <input id="mainTarget" type="number" min="1" step="1"></label>
+          <label>Daily Target <input id="dailyTarget" type="number" min="0" step="1"></label>
+          <label>Weekly Target <input id="weeklyTarget" type="number" min="0" step="1"></label>
+          <label>Monthly Target <input id="monthlyTarget" type="number" min="0" step="1"></label>
+          <label>Yearly Target <input id="yearlyTarget" type="number" min="0" step="1"></label>
+          <button id="saveTargets" class="gold">💾 Save Targets</button>
+          <p id="targetMsg">તમારા target પ્રમાણે ETA અને progress ગણાશે.</p>
+        </div>
+        <div class="settings-card">
+          <h3>🔐 PIN Lock</h3>
+          <label>New PIN <input id="pinInput" type="password" inputmode="numeric" maxlength="12" placeholder="4-12 digits"></label>
+          <button id="setPin">🔒 Set / Change PIN</button>
+          <button id="removePin">🔓 Remove PIN</button>
+          <p id="pinStatus">PIN Lock: OFF</p>
+        </div>
+        <div class="settings-card share-card">
+          <h3>📤 Share Progress</h3>
+          <p class="share-preview" id="sharePreview">આજનો Jaap progress share કરો. 🕉️</p>
+          <button id="shareProgress" class="gold">📤 Share Progress</button>
+          <button id="copyProgress">📋 Copy Progress</button>
+          <button id="downloadProgressCard">🖼️ Progress Card</button>
+        </div>
+        <div class="settings-card">
+          <h3>📱 App</h3>
+          <button id="installApp">Install / Add to Home Screen</button>
+          <p id="installMsg">PWA support: offline app mode.</p>
+        </div>
+        <div class="settings-card">
+          <h3>💾 Data Safety</h3>
+          <button id="exportCsv">Export CSV</button>
+          <button id="undoDelete">↶ Recover Last Deleted</button>
+          <button id="clearAll" class="danger-btn">Delete All Data</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="graph" class="page">
+      <div class="panel-title"><h2>📈 Graph</h2></div>
+      <div class="graph-panel panel"><h3>Daily Jaap <small>(Last 31 Days)</small></h3><canvas id="daily2"></canvas></div>
+      <div class="graph-panel panel"><h3>Monthly Jaap <small>(Last 12 Months)</small></h3><canvas id="monthly2"></canvas></div>
+    </section>
+  </main>
+</div>
+
+<div id="modal" class="modal hidden">
+  <div class="modal-box">
+    <h3>જાપ કઈ તારીખે સેવ કરવા?</h3>
+    <input id="endDate" type="date">
+    <div><button id="cancel">Cancel</button><button id="confirm" class="gold">Save Session</button></div>
+  </div>
+</div>
+
+<div id="pinLock" class="pin-lock hidden">
+  <div class="pin-lock-box">
+    <div class="pin-om">ॐ</div>
+    <h2>🔐 Jaap Counter Locked</h2>
+    <p>તમારો PIN દાખલ કરો</p>
+    <input id="unlockPin" type="password" inputmode="numeric" maxlength="12" autocomplete="current-password" placeholder="PIN">
+    <button id="unlockBtn" class="gold wide">🔓 Unlock</button>
+    <p id="unlockMsg"></p>
+  </div>
+</div>
+<audio id="audio" src="om-namah-shivay.mp3" preload="auto" loop></audio>
+<footer>ॐ Om Namah Shivay ॐ &nbsp; | &nbsp; Har Har Mahadev | Built with Devotion ❤️ &nbsp;|&nbsp; <span id="appStatus">Offline Ready</span></footer>
+<script src="script.js"></script>
+</body>
+</html>

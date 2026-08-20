@@ -1,0 +1,10 @@
+{
+  "name": "Om Namah Shivay Jaap Counter",
+  "short_name": "Jaap Counter",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#050719",
+  "theme_color": "#050719",
+  "description": "Mahadev Jaap Counter with offline storage and statistics",
+  "icons": []
+}
