@@ -181,3 +181,1280 @@ body[data-theme="purple"] .sidebar,body[data-theme="purple"] .top{background:rgb
 body[data-theme="saffron"] .sidebar,body[data-theme="saffron"] .top{background:rgba(22,8,2,.88)!important}
 body[data-theme="midnight"] .sidebar,body[data-theme="midnight"] .top{background:rgba(2,7,14,.88)!important}
 body[data-theme="forest"] .sidebar,body[data-theme="forest"] .top{background:rgba(2,14,8,.88)!important}
+
+
+/* =========================================================
+   RESPONSIVE FIX PACK
+   HTML / IDs / CLASS NAMES — NO CHANGES
+   Laptop + Desktop + Tablet + Mobile
+   ========================================================= */
+
+/* ---------- GLOBAL ---------- */
+
+*,
+*::before,
+*::after{
+    box-sizing:border-box;
+}
+
+html{
+    width:100%;
+    min-height:100%;
+    overflow-x:hidden;
+}
+
+body{
+    width:100%;
+    min-width:0;
+    overflow-x:hidden;
+}
+
+img,
+canvas,
+video{
+    max-width:100%;
+}
+
+button,
+input,
+select,
+textarea{
+    max-width:100%;
+    font:inherit;
+}
+
+button{
+    touch-action:manipulation;
+}
+
+
+/* =========================================================
+   LARGE DESKTOP
+   ========================================================= */
+
+@media (min-width:1400px){
+
+    .content{
+        max-width:1700px;
+        width:100%;
+        margin:0 auto;
+        padding-left:25px;
+        padding-right:25px;
+    }
+
+    .layout{
+        grid-template-columns:270px minmax(0,1fr);
+    }
+
+    .sidebar{
+        padding:20px;
+    }
+
+    .live-box{
+        max-width:760px;
+    }
+
+    .top{
+        padding-left:32px;
+        padding-right:32px;
+    }
+}
+
+
+/* =========================================================
+   DESKTOP / LAPTOP
+   1051px - 1399px
+   ========================================================= */
+
+@media (min-width:1051px) and (max-width:1399px){
+
+    .layout{
+        grid-template-columns:235px minmax(0,1fr);
+    }
+
+    .sidebar{
+        padding:14px;
+    }
+
+    .content{
+        padding:15px 14px 70px;
+    }
+
+    .nav{
+        height:58px;
+        font-size:16px;
+        gap:10px;
+    }
+
+    .nav span{
+        width:42px;
+        height:42px;
+        font-size:22px;
+    }
+
+    .top{
+        padding:11px 18px;
+    }
+
+    .top-card{
+        min-width:165px;
+    }
+
+    .logo h1{
+        font-size:23px;
+    }
+
+    .graph-panel canvas{
+        width:100%!important;
+    }
+}
+
+
+/* =========================================================
+   LAPTOP SMALL
+   801px - 1050px
+   ========================================================= */
+
+@media (min-width:801px) and (max-width:1050px){
+
+    .top{
+        height:auto;
+        min-height:90px;
+        padding:10px 14px;
+        gap:10px;
+    }
+
+    .logo{
+        flex:0 0 auto;
+    }
+
+    .logo h1{
+        font-size:21px;
+    }
+
+    .logo b{
+        font-size:13px;
+    }
+
+    .om{
+        font-size:43px;
+    }
+
+    .top-cards{
+        flex:1;
+        min-width:0;
+        display:grid;
+        grid-template-columns:repeat(3,minmax(0,1fr));
+        gap:7px;
+    }
+
+    .top-card{
+        min-width:0;
+        width:100%;
+        height:72px;
+        padding:8px 10px;
+    }
+
+    .top-card strong{
+        font-size:16px;
+        overflow:hidden;
+        text-overflow:ellipsis;
+    }
+
+    .layout{
+        grid-template-columns:190px minmax(0,1fr);
+    }
+
+    .sidebar{
+        padding:10px;
+    }
+
+    .nav{
+        height:55px;
+        padding:6px 8px;
+        gap:8px;
+        font-size:14px;
+    }
+
+    .nav span{
+        width:38px;
+        height:38px;
+        font-size:20px;
+        flex-shrink:0;
+    }
+
+    .nav b{
+        font-size:13px;
+        line-height:1.1;
+    }
+
+    .side-card{
+        padding:11px 9px;
+    }
+
+    .side-card p{
+        font-size:11px;
+    }
+
+    .content{
+        padding:12px;
+    }
+
+    .stat-grid,
+    .achievement-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+
+    .settings-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+
+    .graphs-inline{
+        grid-template-columns:1fr!important;
+    }
+}
+
+
+/* =========================================================
+   TABLET
+   601px - 800px
+   ========================================================= */
+
+@media (min-width:601px) and (max-width:800px){
+
+    .top{
+        position:relative;
+        height:auto;
+        min-height:0;
+        padding:12px;
+        display:flex;
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .logo{
+        justify-content:center;
+    }
+
+    .logo h1{
+        font-size:22px;
+    }
+
+    .top-cards{
+        width:100%;
+        display:grid;
+        grid-template-columns:repeat(3,minmax(0,1fr));
+        gap:8px;
+    }
+
+    .top-card{
+        min-width:0;
+        width:100%;
+        height:70px;
+    }
+
+    .layout{
+        display:block;
+        min-height:0;
+    }
+
+    .sidebar{
+        width:100%;
+        border-right:0;
+        border-bottom:1px solid var(--T-border);
+        padding:10px;
+    }
+
+    .main-nav{
+        grid-template-columns:repeat(4,minmax(0,1fr));
+        gap:7px;
+    }
+
+    .nav{
+        min-width:0;
+        height:58px;
+        justify-content:center;
+        padding:5px;
+    }
+
+    .nav span{
+        width:40px;
+        height:40px;
+        font-size:21px;
+    }
+
+    .nav b{
+        display:none;
+    }
+
+    .side-card{
+        display:none;
+    }
+
+    .content{
+        padding:12px;
+    }
+
+    .panel-title h2{
+        font-size:22px;
+    }
+
+    .big-number{
+        font-size:78px;
+    }
+
+    .live-box{
+        width:100%;
+        max-width:650px;
+        padding:28px 18px;
+    }
+
+    .stat-grid,
+    .achievement-grid,
+    .settings-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+
+    .graphs-inline{
+        grid-template-columns:1fr!important;
+    }
+
+    .graph-panel{
+        min-width:0!important;
+    }
+
+    .graph-panel canvas{
+        height:300px!important;
+        min-height:300px!important;
+    }
+
+    .report-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+   481px - 600px
+   ========================================================= */
+
+@media (max-width:600px){
+
+    body{
+        font-size:14px;
+    }
+
+    /* ---------- TOP ---------- */
+
+    .top{
+        position:relative;
+        height:auto;
+        min-height:0;
+        padding:10px;
+        display:flex;
+        flex-direction:column;
+        gap:10px;
+    }
+
+    .logo{
+        width:100%;
+        justify-content:center;
+        text-align:left;
+    }
+
+    .om{
+        font-size:40px;
+    }
+
+    .logo h1{
+        font-size:20px;
+        line-height:1.15;
+    }
+
+    .logo b{
+        font-size:12px;
+    }
+
+    .top-cards{
+        width:100%;
+        display:grid;
+        grid-template-columns:repeat(3,minmax(0,1fr));
+        gap:6px;
+        overflow:visible;
+    }
+
+    .top-card{
+        min-width:0;
+        width:100%;
+        height:68px;
+        padding:7px 8px;
+        border-radius:9px;
+    }
+
+    .top-card span{
+        font-size:9px;
+    }
+
+    .top-card strong{
+        font-size:13px;
+        white-space:nowrap;
+        overflow:hidden;
+        text-overflow:ellipsis;
+    }
+
+    .top-card em{
+        font-size:8px;
+        right:7px;
+        bottom:7px;
+    }
+
+    .tiny-line{
+        height:4px;
+    }
+
+    /* ---------- LAYOUT ---------- */
+
+    .layout{
+        display:block;
+        min-height:0;
+    }
+
+    .sidebar{
+        width:100%;
+        padding:7px;
+        border-right:0;
+        border-bottom:1px solid var(--T-border);
+    }
+
+    .main-nav{
+        display:grid;
+        grid-template-columns:repeat(4,minmax(0,1fr));
+        gap:6px;
+    }
+
+    .nav{
+        width:100%;
+        min-width:0;
+        height:54px;
+        justify-content:center;
+        padding:4px;
+        border-radius:9px;
+    }
+
+    .nav span{
+        width:36px;
+        height:36px;
+        font-size:19px;
+    }
+
+    .nav b{
+        display:none;
+    }
+
+    .side-card{
+        display:none;
+    }
+
+    /* ---------- CONTENT ---------- */
+
+    .content{
+        width:100%;
+        min-width:0;
+        padding:10px 8px 55px;
+    }
+
+    .panel-title{
+        margin:4px 0 10px;
+    }
+
+    .panel-title h2{
+        font-size:21px;
+        margin:0;
+    }
+
+    /* ---------- CALENDAR ---------- */
+
+    .calendar-panel{
+        width:100%;
+        min-width:0;
+    }
+
+    .calendar-head{
+        height:50px;
+        padding:0 8px;
+        gap:4px;
+    }
+
+    .calendar-head h2{
+        font-size:15px;
+        white-space:nowrap;
+        overflow:hidden;
+        text-overflow:ellipsis;
+    }
+
+    .calendar-head button{
+        font-size:26px;
+        padding:4px;
+        flex-shrink:0;
+    }
+
+    .calendar-head #todayBtn{
+        font-size:10px;
+        padding:6px 8px;
+    }
+
+    .week,
+    .days{
+        gap:2px;
+        padding:5px;
+    }
+
+    .week span{
+        font-size:9px;
+    }
+
+    .day{
+        min-height:63px;
+        padding:5px;
+        border-radius:6px;
+    }
+
+    .day .num{
+        font-size:12px;
+    }
+
+    .day .count{
+        font-size:9px;
+        margin-top:4px;
+        line-height:1.15;
+        word-break:break-word;
+    }
+
+    .day .percent{
+        display:none;
+    }
+
+    .legend{
+        gap:5px;
+        padding:7px;
+    }
+
+    .legend span{
+        font-size:8px;
+    }
+
+    .legend i{
+        width:15px;
+        height:15px;
+    }
+
+    /* ---------- LIVE ---------- */
+
+    .live-box{
+        width:100%;
+        max-width:none;
+        margin:15px auto;
+        padding:22px 10px;
+        border-radius:14px;
+    }
+
+    .session-tag{
+        font-size:10px;
+    }
+
+    .big-number{
+        font-size:64px;
+        line-height:1;
+        overflow:hidden;
+        text-overflow:ellipsis;
+    }
+
+    .round-jaap{
+        width:125px;
+        height:125px;
+        font-size:32px;
+    }
+
+    #timer{
+        margin:15px 0;
+        font-size:13px;
+    }
+
+    .quick-adds{
+        gap:5px;
+    }
+
+    .quick-adds button{
+        flex:1;
+        min-width:0;
+        padding:9px 5px;
+    }
+
+    .controls{
+        gap:6px;
+    }
+
+    .controls button{
+        flex:1 1 calc(50% - 6px);
+        min-width:0;
+        padding:10px 7px;
+    }
+
+    /* ---------- ADD ---------- */
+
+    .form-panel{
+        width:100%;
+        margin:15px auto;
+        padding:15px;
+    }
+
+    .records{
+        width:100%;
+        padding:13px;
+    }
+
+    .record{
+        grid-template-columns:minmax(0,1fr) auto auto;
+        gap:5px;
+    }
+
+    .record button{
+        padding:5px 7px;
+        font-size:11px;
+    }
+
+    /* ---------- GRAPHS ---------- */
+
+    .graphs-inline{
+        grid-template-columns:1fr!important;
+        gap:10px!important;
+    }
+
+    .graph-panel{
+        width:100%;
+        min-width:0!important;
+        min-height:330px!important;
+        padding:12px!important;
+        overflow:hidden;
+    }
+
+    .graph-panel h3{
+        font-size:14px!important;
+    }
+
+    .graph-panel canvas{
+        width:100%!important;
+        max-width:100%!important;
+        height:275px!important;
+        min-height:275px!important;
+    }
+
+    #graph .graph-panel{
+        min-height:340px!important;
+    }
+
+    #graph .graph-panel canvas{
+        height:285px!important;
+        min-height:285px!important;
+    }
+
+    /* ---------- STATISTICS ---------- */
+
+    .stat-grid{
+        grid-template-columns:1fr 1fr;
+        gap:7px;
+    }
+
+    .stat-card{
+        min-width:0;
+        padding:13px 10px;
+    }
+
+    .stat-card span{
+        font-size:9px;
+    }
+
+    .stat-card b{
+        font-size:17px;
+        overflow-wrap:anywhere;
+    }
+
+    .milestone{
+        padding:13px;
+    }
+
+    /* ---------- ACHIEVEMENTS ---------- */
+
+    .achievement-grid{
+        grid-template-columns:1fr 1fr;
+        gap:7px;
+    }
+
+    .achievement{
+        padding:12px 9px;
+    }
+
+    .achievement .icon{
+        font-size:26px;
+    }
+
+    .achievement h3{
+        font-size:13px;
+    }
+
+    .achievement p{
+        font-size:10px;
+    }
+
+    /* ---------- SETTINGS ---------- */
+
+    .settings-grid{
+        grid-template-columns:1fr;
+        gap:10px;
+    }
+
+    .settings-card{
+        padding:14px;
+        min-width:0;
+    }
+
+    .settings-card h3{
+        font-size:16px;
+    }
+
+    .theme-gallery{
+        grid-template-columns:repeat(3,1fr);
+        gap:6px;
+    }
+
+    .theme-tile{
+        min-height:82px;
+        padding:7px 4px;
+    }
+
+    .theme-tile span{
+        font-size:22px;
+    }
+
+    .theme-tile b{
+        font-size:10px;
+    }
+
+    .theme-tile small{
+        font-size:8px;
+    }
+
+    .settings-card button{
+        max-width:100%;
+        margin:4px 3px 0 0;
+        padding:9px 10px;
+        font-size:12px;
+    }
+
+    /* ---------- REPORTS ---------- */
+
+    .report-switch{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:6px;
+    }
+
+    .report-tab{
+        padding:9px 5px;
+        font-size:11px;
+    }
+
+    .report-box{
+        padding:13px;
+    }
+
+    .report-head{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .report-head input{
+        width:100%;
+    }
+
+    .report-grid{
+        grid-template-columns:1fr 1fr;
+        gap:7px;
+    }
+
+    .report-metric{
+        padding:11px 9px;
+    }
+
+    .report-metric span{
+        font-size:9px;
+    }
+
+    .report-metric b{
+        font-size:17px;
+    }
+
+    /* ---------- YOGA ---------- */
+
+    .yoga-toolbar{
+        display:flex;
+        flex-direction:column;
+        align-items:stretch;
+        gap:9px;
+        padding:12px;
+    }
+
+    .yoga-toolbar label{
+        min-width:0;
+        width:100%;
+    }
+
+    .yoga-content{
+        padding:15px;
+        max-height:none;
+        overflow:visible;
+        font-size:15px;
+        line-height:1.75;
+    }
+
+    .yoga-content h2{
+        font-size:22px;
+    }
+
+    .yoga-content h3{
+        font-size:18px;
+    }
+
+    /* ---------- MODAL ---------- */
+
+    .modal-box{
+        width:calc(100vw - 30px);
+        padding:18px;
+    }
+
+    /* ---------- PIN ---------- */
+
+    .pin-lock-box{
+        width:calc(100vw - 30px);
+        padding:25px 18px;
+    }
+
+    .pin-om{
+        font-size:52px;
+    }
+
+    /* ---------- FOOTER ---------- */
+
+    footer{
+        font-size:9px;
+        line-height:1.6;
+        padding:8px 5px;
+    }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   <= 480px
+   ========================================================= */
+
+@media (max-width:480px){
+
+    .top{
+        padding:8px;
+    }
+
+    .logo{
+        justify-content:flex-start;
+    }
+
+    .om{
+        font-size:36px;
+    }
+
+    .logo h1{
+        font-size:17px;
+    }
+
+    .logo b{
+        font-size:10px;
+    }
+
+    .top-cards{
+        grid-template-columns:repeat(3,minmax(0,1fr));
+        gap:4px;
+    }
+
+    .top-card{
+        height:62px;
+        padding:6px;
+    }
+
+    .top-card span{
+        font-size:8px;
+    }
+
+    .top-card strong{
+        font-size:11px;
+    }
+
+    .top-card em{
+        display:none;
+    }
+
+    .main-nav{
+        grid-template-columns:repeat(3,minmax(0,1fr));
+        gap:5px;
+    }
+
+    .nav{
+        height:50px;
+    }
+
+    .nav span{
+        width:34px;
+        height:34px;
+        font-size:17px;
+    }
+
+    .content{
+        padding:8px 6px 50px;
+    }
+
+    .panel-title h2{
+        font-size:19px;
+    }
+
+    /* Calendar */
+
+    .week,
+    .days{
+        padding:3px;
+        gap:2px;
+    }
+
+    .day{
+        min-height:56px;
+        padding:4px;
+    }
+
+    .day .num{
+        font-size:11px;
+    }
+
+    .day .count{
+        font-size:8px;
+    }
+
+    .legend{
+        overflow:hidden;
+    }
+
+    .legend span{
+        font-size:7px;
+    }
+
+    .legend i{
+        width:13px;
+        height:13px;
+    }
+
+    /* Live */
+
+    .big-number{
+        font-size:53px;
+    }
+
+    .round-jaap{
+        width:110px;
+        height:110px;
+    }
+
+    .quick-adds button{
+        font-size:11px;
+        padding:8px 3px;
+    }
+
+    .controls button{
+        font-size:11px;
+    }
+
+    /* Statistics */
+
+    .stat-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .stat-card{
+        padding:11px 7px;
+    }
+
+    .stat-card b{
+        font-size:15px;
+    }
+
+    /* Achievements */
+
+    .achievement-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    /* Theme */
+
+    .theme-gallery{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    /* Reports */
+
+    .report-grid{
+        grid-template-columns:1fr;
+    }
+
+    /* Graph */
+
+    .graph-panel{
+        min-height:310px!important;
+    }
+
+    .graph-panel canvas{
+        height:255px!important;
+        min-height:255px!important;
+    }
+
+    #graph .graph-panel{
+        min-height:320px!important;
+    }
+
+    #graph .graph-panel canvas{
+        height:270px!important;
+        min-height:270px!important;
+    }
+}
+
+
+/* =========================================================
+   VERY SMALL PHONES
+   <= 360px
+   ========================================================= */
+
+@media (max-width:360px){
+
+    .logo h1{
+        font-size:15px;
+    }
+
+    .logo b{
+        font-size:9px;
+    }
+
+    .om{
+        font-size:32px;
+    }
+
+    .top-card{
+        height:58px;
+    }
+
+    .top-card strong{
+        font-size:10px;
+    }
+
+    .main-nav{
+        gap:4px;
+    }
+
+    .nav{
+        height:47px;
+    }
+
+    .nav span{
+        width:31px;
+        height:31px;
+        font-size:15px;
+    }
+
+    .day{
+        min-height:52px;
+    }
+
+    .day .num{
+        font-size:10px;
+    }
+
+    .day .count{
+        font-size:7px;
+    }
+
+    .big-number{
+        font-size:46px;
+    }
+
+    .round-jaap{
+        width:100px;
+        height:100px;
+    }
+
+    .stat-card b{
+        font-size:14px;
+    }
+}
+
+
+/* =========================================================
+   PREVENT HORIZONTAL OVERFLOW
+   ========================================================= */
+
+.content,
+.page,
+.panel,
+.graph-panel,
+.settings-card,
+.records,
+.form-panel,
+.calendar-panel,
+.live-box,
+.report-box,
+.yoga-content,
+.reader,
+.book-library{
+    min-width:0;
+    max-width:100%;
+}
+
+canvas{
+    max-width:100%!important;
+}
+
+pre{
+    max-width:100%;
+    overflow-x:auto;
+}
+
+table{
+    max-width:100%;
+}
+
+input,
+select,
+textarea{
+    min-width:0;
+}
+
+
+/* =========================================================
+   BETTER TOUCH TARGETS
+   ========================================================= */
+
+@media (pointer:coarse){
+
+    button,
+    .nav,
+    .theme-tile,
+    .report-tab{
+        min-height:44px;
+    }
+
+    .day{
+        cursor:pointer;
+    }
+}
+
+
+/* =========================================================
+   SAFE TEXT WRAPPING
+   ========================================================= */
+
+.side-card p b,
+.stat-card b,
+.report-metric b,
+.top-card strong,
+#sideTarget,
+#sideDone,
+#sideRemain,
+#sideProgress,
+#sideEta{
+    overflow-wrap:anywhere;
+}
+
+
+/* =========================================================
+   FIX LONG NUMBERS
+   ========================================================= */
+
+#total,
+#progress,
+#statTotal,
+#statRemain,
+#sideTarget,
+#sideDone,
+#sideRemain,
+#sideProgress{
+    max-width:100%;
+    overflow-wrap:anywhere;
+}
+
+
+/* =========================================================
+   MOBILE SCROLLBAR
+   ========================================================= */
+
+@media (max-width:800px){
+
+    .top-cards{
+        scrollbar-width:none;
+    }
+
+    .top-cards::-webkit-scrollbar{
+        display:none;
+    }
+}
+
+
+/* =========================================================
+   MOBILE SAFE MODAL
+   ========================================================= */
+
+@media (max-width:600px){
+
+    .modal{
+        padding:15px;
+    }
+
+    .modal-box{
+        max-height:90vh;
+        overflow:auto;
+    }
+
+    .pin-lock{
+        padding:15px;
+    }
+
+    .pin-lock-box{
+        max-height:90vh;
+        overflow:auto;
+    }
+}
+
+
+/* =========================================================
+   FINAL WIDTH SAFETY
+   ========================================================= */
+
+@media (max-width:800px){
+
+    .content > .page{
+        width:100%;
+        max-width:100%;
+    }
+
+    .graphs-inline,
+    .stat-grid,
+    .achievement-grid,
+    .settings-grid,
+    .report-grid{
+        width:100%;
+        max-width:100%;
+    }
+}
