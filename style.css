@@ -1463,3 +1463,9 @@ textarea{
 }
 /* User profile / Google Sheet sync */
 .settings-card .muted{opacity:.72;font-size:.88rem;word-break:break-all}
+
+/* Name dialog fix */
+.name-dialog-overlay{position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.78);display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(5px)}
+.name-dialog-box{width:min(460px,94vw);background:#10152b;border:1px solid rgba(255,255,255,.15);border-radius:18px;padding:24px;box-shadow:0 20px 70px rgba(0,0,0,.55);color:#fff}
+.name-dialog-box h2{margin:0 0 8px}.name-dialog-box p{opacity:.82;line-height:1.5}.name-dialog-box input{width:100%;box-sizing:border-box;padding:13px 14px;border-radius:10px;border:1px solid rgba(255,255,255,.2);background:#070b19;color:#fff;font-size:17px;outline:none}.name-dialog-box input:focus{border-color:#d69aff;box-shadow:0 0 0 3px rgba(214,154,255,.12)}
+.name-dialog-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:16px}.name-dialog-actions button{padding:11px 16px;border:0;border-radius:10px;cursor:pointer}.name-dialog-msg{display:block;margin-top:10px;color:#ffb3b3}

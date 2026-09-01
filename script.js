@@ -18,13 +18,47 @@ function cryptoRandomId(){try{if(window.crypto?.randomUUID)return window.crypto.
 function saveProfile(){localStorage.setItem(PROFILE_KEY,JSON.stringify(profile))}
 function askForName(force=false){
  if(profile.name && !force)return true;
- let name=prompt(force?"તમારું નામ બદલો:":"આ Jaap Counterમાં તમારું નામ લખો:",profile.name||"");
- if(name===null && !profile.name)return false;
- name=String(name||"").trim().replace(/\s+/g," ").slice(0,60);
- if(!name){showToast("નામ લખવું જરૂરી છે.");return false}
- if(!profile.userId)profile.userId="user-"+cryptoRandomId();
- profile.name=name;saveProfile();updateProfileUI();showToast("નામ સેવ થયું: "+name);return true;
+ showNameDialog(force);
+ return false;
 }
+
+function showNameDialog(force=false){
+ let old=document.getElementById("nameDialog");
+ if(old) old.remove();
+ const wrap=document.createElement("div");
+ wrap.id="nameDialog";
+ wrap.className="name-dialog-overlay";
+ wrap.innerHTML=`<div class="name-dialog-box" role="dialog" aria-modal="true">
+   <h2>👤 ${force?"નામ બદલો":"તમારું નામ સેટ કરો"}</h2>
+   <p>આ નામ તમારા Jaap record સાથે Google Sheetમાં દેખાશે.</p>
+   <input id="nameDialogInput" type="text" maxlength="60" autocomplete="name" placeholder="તમારું નામ" value="${escapeHtml(profile.name||"")}">
+   <div class="name-dialog-actions">
+     <button id="nameDialogCancel">Cancel</button>
+     <button id="nameDialogSave" class="gold">💾 Save Name</button>
+   </div>
+   <small id="nameDialogMsg"></small>
+ </div>`;
+ document.body.appendChild(wrap);
+ const input=document.getElementById("nameDialogInput");
+ const msg=document.getElementById("nameDialogMsg");
+ const close=()=>wrap.remove();
+ const saveName=()=>{
+   const name=String(input.value||"").trim().replace(/\s+/g," ").slice(0,60);
+   if(!name){msg.textContent="નામ લખવું જરૂરી છે.";input.focus();return}
+   if(!profile.userId)profile.userId="user-"+cryptoRandomId();
+   profile.name=name;
+   saveProfile();
+   updateProfileUI();
+   close();
+   showToast("નામ સેવ થયું: "+name+" ✅");
+   migrateOldDataToSheet();
+ };
+ document.getElementById("nameDialogCancel").onclick=close;
+ document.getElementById("nameDialogSave").onclick=saveName;
+ input.addEventListener("keydown",e=>{if(e.key==="Enter")saveName();if(e.key==="Escape")close()});
+ setTimeout(()=>{input.focus();input.select()},30);
+}
+function escapeHtml(v){return String(v).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","\'":"&#39;"}[c]))}
 function updateProfileUI(){
  const n=$("#profileName"); if(n)n.textContent=profile.name||"નામ સેટ નથી";
  const id=$("#profileId"); if(id)id.textContent=profile.userId||"—";
@@ -400,7 +434,7 @@ window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredIns
 $("#installApp").onclick=async()=>{if(deferredInstall){deferredInstall.prompt();deferredInstall=null}else $("#installMsg").textContent="Browser menuમાંથી Install / Add to Home Screen પસંદ કરો."};
 if("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(()=>{});
 
-if(!profile.name) askForName(false);
+if(!profile.name) setTimeout(()=>showNameDialog(false),150);
 updateProfileUI();
 if(profile.name) migrateOldDataToSheet();
 applyTheme();
