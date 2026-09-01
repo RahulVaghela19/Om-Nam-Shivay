@@ -1,6 +1,32 @@
 const TARGET=1100000000,KEY="om_namah_shivay_jaap_v3";
 const DEFAULT_TARGETS={main:TARGET,daily:30000,weekly:210000,monthly:900000,yearly:11000000};
 const MILESTONES=[1000,10000,100000,1000000,10000000,100000000,1000000000,TARGET];
+// Google Sheet sync (no login required). Existing local Jaap data is preserved.
+const GOOGLE_SHEET_WEB_APP_URL="https://script.google.com/macros/s/AKfycbz12A9qSGQIIVspZRM9p5PpKuVPElVS244o2i5bXQQW-Aqo3NvTWb5VMszXOYa0OYzIsQ/exec";
+const SYNC_USER_KEY="om_namah_shivay_sync_user_v1";
+const SYNC_MIGRATED_KEY="om_namah_shivay_sync_migrated_v1";
+function getSyncUserId(){
+  let id=localStorage.getItem(SYNC_USER_KEY);
+  if(!id){ id="user-"+crypto.randomUUID(); localStorage.setItem(SYNC_USER_KEY,id); }
+  return id;
+}
+function syncJaapToGoogleSheet(date, jaap, totalNow){
+  const count=Number(jaap||0);
+  if(!GOOGLE_SHEET_WEB_APP_URL || !date || !count) return;
+  const payload={userId:getSyncUserId(),name:"Anonymous User",date:String(date),jaap:count,totalJaap:Number(totalNow||0),target:Number(data.targets?.main||TARGET)};
+  try{
+    fetch(GOOGLE_SHEET_WEB_APP_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload),keepalive:true}).catch(()=>{});
+  }catch(e){}
+}
+function migrateExistingJaapToGoogleSheet(){
+  if(localStorage.getItem(SYNC_MIGRATED_KEY)==="done") return;
+  const entries=Object.entries(data.days||{}).filter(([,v])=>Number(v)>0).sort((a,b)=>a[0].localeCompare(b[0]));
+  if(!entries.length){ localStorage.setItem(SYNC_MIGRATED_KEY,"done"); return; }
+  let runningTotal=0;
+  entries.forEach(([date,count])=>{ const n=Number(count||0); runningTotal+=n; syncJaapToGoogleSheet(date,n,runningTotal); });
+  localStorage.setItem(SYNC_MIGRATED_KEY,"done");
+}
+
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const iso=d=>{const x=new Date(d);return `${x.getFullYear()}-${String(x.getMonth()+1).padStart(2,"0")}-${String(x.getDate()).padStart(2,"0")}`};
 const today=()=>iso(new Date());
@@ -71,10 +97,10 @@ $("#undoSession").onclick=()=>{if(session>0){session--;$("#session").textContent
 $("#jaap").onclick=()=>{if(!running)return;session++;$("#session").textContent=fmt(session);$("#session").animate([{transform:"scale(1)"},{transform:"scale(1.08)"},{transform:"scale(1)"}],{duration:180})};
 $("#end").onclick=()=>{if(running)$("#pause").click();if(session<1){$("#liveMsg").textContent="આ સેશનમાં જાપ નથી.";return}$("#endDate").value=today();$("#modal").classList.remove("hidden")};
 $("#cancel").onclick=()=>$("#modal").classList.add("hidden");
-$("#confirm").onclick=()=>{const d=$("#endDate").value||today();const oldTotal=total();const oldTodayTotal=Number(data.days[today()]||0);data.days[d]=(data.days[d]||0)+session;save();session=0;elapsed=0;$("#session").textContent="0";$("#timer").textContent="00:00:00";$("#modal").classList.add("hidden");$("#end").disabled=true;$("#pause").disabled=true;$("#start").disabled=false;$("#jaap").disabled=true;$("#liveMsg").textContent="સેશન સેવ થયું. 🙏";afterDataChange(oldTotal,oldTodayTotal,d===today())};
+$("#confirm").onclick=()=>{const d=$("#endDate").value||today();const oldTotal=total();const oldTodayTotal=Number(data.days[today()]||0);data.days[d]=(data.days[d]||0)+session;save();syncJaapToGoogleSheet(d,session,total());session=0;elapsed=0;$("#session").textContent="0";$("#timer").textContent="00:00:00";$("#modal").classList.add("hidden");$("#end").disabled=true;$("#pause").disabled=true;$("#start").disabled=false;$("#jaap").disabled=true;$("#liveMsg").textContent="સેશન સેવ થયું. 🙏";afterDataChange(oldTotal,oldTodayTotal,d===today())};
 
 $("#addDate").value=today();
-$("#save").onclick=()=>{const d=$("#addDate").value,c=Number($("#addCount").value);if(!d||!Number.isFinite(c)||c<0){$("#addMsg").textContent="યોગ્ય તારીખ અને જાપ સંખ્યા આપો.";return}const oldTotal=total();const oldTodayTotal=Number(data.days[today()]||0);data.days[d]=(data.days[d]||0)+c;save();refresh();$("#addMsg").textContent=`${d} પર ${fmt(c)} જાપ ઉમેરાયા. કુલ: ${fmt(data.days[d])}`;$("#addCount").value="";afterDataChange(oldTotal,oldTodayTotal,d===today())};
+$("#save").onclick=()=>{const d=$("#addDate").value,c=Number($("#addCount").value);if(!d||!Number.isFinite(c)||c<0){$("#addMsg").textContent="યોગ્ય તારીખ અને જાપ સંખ્યા આપો.";return}const oldTotal=total();const oldTodayTotal=Number(data.days[today()]||0);data.days[d]=(data.days[d]||0)+c;save();syncJaapToGoogleSheet(d,c,total());refresh();$("#addMsg").textContent=`${d} પર ${fmt(c)} જાપ ઉમેરાયા. કુલ: ${fmt(data.days[d])}`;$("#addCount").value="";afterDataChange(oldTotal,oldTodayTotal,d===today())};
 function renderRecords(){const el=$("#records"),arr=Object.entries(data.days).sort((a,b)=>b[0].localeCompare(a[0]));el.innerHTML=arr.length?arr.slice(0,25).map(([d,c])=>`<div class="record"><span>${d}</span><b>${fmt(c)}</b><button data-e="${d}">Edit</button><button data-x="${d}">Delete</button></div>`).join(""):"<p>હજુ ડેટા નથી.</p>";el.querySelectorAll("[data-e]").forEach(b=>b.onclick=()=>{$("#addDate").value=b.dataset.e;$("#addCount").value=data.days[b.dataset.e];$("#addMsg").textContent="Edit: આ જાપમાં વધુ સંખ્યા ઉમેરવા માટે Save દબાવો."});el.querySelectorAll("[data-x]").forEach(b=>b.onclick=()=>{if(confirm("આ તારીખનો આખો ડેટા delete કરવો?")){delete data.days[b.dataset.x];save();refresh();renderRecords();drawCalendar()}})}
 
 
@@ -367,5 +393,7 @@ updateReports();
 updateSharePreview();
 initYoga();
 initPin();
+// One-time migration of existing local Jaap history; local data is not deleted.
+migrateExistingJaapToGoogleSheet();
 
 refresh();renderRecords();drawCalendar();drawGraphs("daily","monthly");

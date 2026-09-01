@@ -90,3 +90,5 @@ Only import text that you have the right to use (for example, public-domain text
 - Removed the Learning / Puran / Gita future section and full-book import UI.
 - Added Yoga & Pranayama section with long Gujarati educational content on yoga, pranayama safety, seven traditional chakras, and Ashta Siddhi.
 - Added topic selector, font-size control and bookmark.
+
+\n## Google Sheet Sync\n- No login system is added.\n- Each browser gets a stable anonymous User ID.\n- Existing Jaap data in that browser is sent to the configured Google Apps Script once.\n- New Jaap additions are appended to the Google Sheet.\n- The website never deletes Google Sheet rows.\n- Existing localStorage Jaap data is not cleared or replaced.\n
