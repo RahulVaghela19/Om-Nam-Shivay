@@ -393,17 +393,29 @@ updateReports();
 updateSharePreview();
 initYoga();
 initPin();
-const changeNameBtn = document.getElementById("changeName");
 
-if (changeNameBtn) {
+document.addEventListener("DOMContentLoaded", function () {
+  const changeNameBtn = document.getElementById("changeName");
+
+  if (!changeNameBtn) {
+    console.warn("Change Name button not found.");
+    return;
+  }
+
   changeNameBtn.onclick = async function () {
-    const currentName = (typeof profile !== "undefined" && profile.name)
-      ? profile.name
-      : "";
+    const currentName =
+      (typeof profile !== "undefined" && profile.name)
+        ? profile.name
+        : "";
 
-    const newName = prompt("🕉️ તમારું નામ લખો:", currentName);
+    const newName = prompt(
+      "🕉️ તમારું નામ લખો:",
+      currentName
+    );
 
-    if (newName === null) return;
+    if (newName === null) {
+      return;
+    }
 
     const name = newName.trim();
 
@@ -412,6 +424,8 @@ if (changeNameBtn) {
       return;
     }
 
+    // Save only the profile name.
+    // Existing Jaap data is NOT deleted or changed.
     if (typeof profile !== "undefined") {
       profile.name = name;
     }
@@ -424,14 +438,24 @@ if (changeNameBtn) {
       updateProfileUI();
     }
 
+    // Sync existing Jaap data to Google Sheet.
     if (typeof migrateExistingJaapToGoogleSheet === "function") {
-      await migrateExistingJaapToGoogleSheet();
+      try {
+        await migrateExistingJaapToGoogleSheet();
+      } catch (error) {
+        console.error("Google Sheet sync error:", error);
+      }
     }
 
     alert("✅ નામ સફળતાપૂર્વક બદલાઈ ગયું.");
   };
-}
-// One-time migration of existing local Jaap history; local data is not deleted.
+});
+
+// One-time migration of existing local Jaap history.
+// Local Jaap data is NOT deleted.
 migrateExistingJaapToGoogleSheet();
 
-refresh();renderRecords();drawCalendar();drawGraphs("daily","monthly");
+refresh();
+renderRecords();
+drawCalendar();
+drawGraphs("daily", "monthly");
