@@ -1461,3 +1461,5 @@ textarea{
         max-width:100%;
     }
 }
+/* User profile / Google Sheet sync */
+.settings-card .muted{opacity:.72;font-size:.88rem;word-break:break-all}
