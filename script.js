@@ -393,6 +393,44 @@ updateReports();
 updateSharePreview();
 initYoga();
 initPin();
+const changeNameBtn = document.getElementById("changeName");
+
+if (changeNameBtn) {
+  changeNameBtn.onclick = async function () {
+    const currentName = (typeof profile !== "undefined" && profile.name)
+      ? profile.name
+      : "";
+
+    const newName = prompt("🕉️ તમારું નામ લખો:", currentName);
+
+    if (newName === null) return;
+
+    const name = newName.trim();
+
+    if (!name) {
+      alert("કૃપા કરીને નામ લખો.");
+      return;
+    }
+
+    if (typeof profile !== "undefined") {
+      profile.name = name;
+    }
+
+    if (typeof saveProfile === "function") {
+      saveProfile();
+    }
+
+    if (typeof updateProfileUI === "function") {
+      updateProfileUI();
+    }
+
+    if (typeof migrateExistingJaapToGoogleSheet === "function") {
+      await migrateExistingJaapToGoogleSheet();
+    }
+
+    alert("✅ નામ સફળતાપૂર્વક બદલાઈ ગયું.");
+  };
+}
 // One-time migration of existing local Jaap history; local data is not deleted.
 migrateExistingJaapToGoogleSheet();
 
